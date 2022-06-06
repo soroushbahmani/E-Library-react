@@ -146,7 +146,7 @@ export default function Book(props) {
                                     <b>توضیحات : </b>  
                                     {
                                         props.description ?
-                                            props.description.substr(0, 45)
+                                            props.description.substr(0, 43)
                                             :
                                             "  توضیحاتی ندارد  "
                                     }

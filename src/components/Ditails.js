@@ -51,22 +51,14 @@ export default function Ditails() {
     <>
       {
         loading ? <Loading /> :
-
           token.token ?
-
             <>
               <MenuTop />
-
-              {/* <iframe style={{ width: '100%', height: `calc(100vh - 75px)` }} src={data.data.path}></iframe> */}
-
-<object  style={{ width: '100%', height: `calc(100vh - 75px)` }} data={data.data.path}>
-</object>
- 
+              <iframe style={{ width: '100%', height: `calc(100vh - 75px)` }} src={data.data.path}></iframe>
             </>
             :
             <>
               <MenuTop />
-
               <Stack sx={{ width: '80%', mx: 'auto', direction: 'rtl', mt: 4 }} spacing={2}>
                 <Alert severity="error">
                   <AlertTitle>کاربر عزیز</AlertTitle>
