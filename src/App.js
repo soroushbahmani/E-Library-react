@@ -15,25 +15,9 @@ import axios from 'axios';
 import ListBook from './components/ListBook';
 import EditBook from './components/EditBook';
 
-
-
-
 axios.defaults.baseURL = 'http://library.erimo.ir';
 
-
 function App() {
-  // useEffect(()=>{
-
-  //     toast('به کتابخانه الکترونیکی خوش آمدید',{
-  //       position: "top-center",
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       });
-  // },[])
 
   return (
     <div>
@@ -56,7 +40,6 @@ function App() {
         <Outlet />
       </Auth.Provider>
       <ToastContainer />
-
 
 
     </div>

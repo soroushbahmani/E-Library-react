@@ -27,10 +27,15 @@ export default function CustomPaginationActionsTable() {
     const [loading, setLoading] = useState(false)
 
     const [list, setList] = useState([])
+    const [moreList, setMoreList] = useState([])
+    const [nextPageurl, setnaxtPageurl] = useState('')
+    const [current_page, setcurrent_page] = useState(0)
+   
+
 
     useEffect(() => {
         if (token.admin) {
-            axios.get(`api/admin/books`,
+            axios.get(`api/admin/books?page=1`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token.token}`,
@@ -38,8 +43,11 @@ export default function CustomPaginationActionsTable() {
                     }
                 })
                 .then(res => {
+                    console.log(res);
                     setList(res.data)
                     setLoading(true)
+                    setnaxtPageurl(res.data.next_page_url)
+                    setcurrent_page(res.data.current_page *10 -10)
 
                 })
                 .catch(error => {
@@ -69,6 +77,8 @@ export default function CustomPaginationActionsTable() {
             Navigation('/')
         }
     }, [])
+
+    console.log(current_page);
 
     const deleteBook = (event) => {
 
@@ -109,6 +119,39 @@ export default function CustomPaginationActionsTable() {
             })
     }
 
+
+    const nextPage = () => {
+        setLoading(false)
+
+        axios.get(`${nextPageurl}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token.token}`,
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+            .then(res => {
+                console.log(res);
+
+                setMoreList(res.data)
+                setnaxtPageurl(res.data.next_page_url)
+                setcurrent_page(res.data.current_page *10 -10)
+                setLoading(true)
+            })
+            .catch(error => {
+                toast.error(`خطا با سرور`, {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored'
+                })
+                Navigation('/')
+            })
+    }
     return (
         <>
             {!loading ?
@@ -123,85 +166,111 @@ export default function CustomPaginationActionsTable() {
                         <Link to='/addbook' style={{ my: 2, mx: 4, display: 'block', width: '100%', height: '100%', textDecoration: 'none' }}>
                             <Button variant="contained" sx={{ mx: 4, mb: 5 }} >افزودن کتاب</Button>
                         </Link>
+                        {list.data.length > 0 ?
+                            <>
+                                <TableContainer component={Paper} >
+                                    <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                                        <TableHead>
+                                            <TableRow key='one'>
+                                                <TableCell >
+                                                    تعداد
+                                                </TableCell>
+                                                <TableCell >
+                                                    عکس
+                                                </TableCell>
+                                                <TableCell >
+                                                    عنوان کتاب
+                                                </TableCell>
+                                                <TableCell >
+                                                    ویرایش
+                                                </TableCell>
+                                                <TableCell >
+                                                    حذف
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            <>
+                                                {list.data.map((row, index) => (
+                                                    <TableRow key={index}>
+                                                        <TableCell sx={{ px: 3 }}>
+                                                            {index + 1}
+                                                        </TableCell>
+                                                        <TableCell >
+                                                            <Avatar alt="Remy Sharp" src={row.image} />
+                                                        </TableCell>
 
-                        <TableContainer component={Paper} >
-                            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-                                <TableHead>
-                                    <TableRow key='one'>
-                                        <TableCell >
-                                            تعداد
-                                        </TableCell>
-                                        <TableCell >
-                                            عکس
-                                        </TableCell>
-
-                                        <TableCell >
-                                            عنوان کتاب
-                                        </TableCell>
-                                        <TableCell >
-                                            ویرایش
-                                        </TableCell>
-                                        <TableCell >
-                                            حذف
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {list.length > 0 ?
-                                        <>
-                                            {list.map((row, index) => (
-                                                <TableRow key={index}>
-                                                    <TableCell >
-                                                        {index + 1}
-                                                    </TableCell>
-                                                    <TableCell >
-                                                        <Avatar alt="Remy Sharp" src={row.image} />
-                                                    </TableCell>
-
-                                                    <TableCell >
-                                                        {row.title}
-                                                    </TableCell>
-                                                    <TableCell >
-                                                        <Link to={'/editbook/' + row.id} style={{ my: 2, mx: 4, display: 'block', width: '100%', height: '100%', textDecoration: 'none' }}>
-                                                            <IconButton aria-label="delete" size="large" color="primary">
-                                                                <EditIcon fontSize="inherit" />
+                                                        <TableCell >
+                                                            {row.title}
+                                                        </TableCell>
+                                                        <TableCell >
+                                                            <Link to={'/editbook/' + row.id} style={{ my: 2, mx: 4, display: 'block', width: '100%', height: '100%', textDecoration: 'none' }}>
+                                                                <IconButton aria-label="delete" size="large" color="primary">
+                                                                    <EditIcon fontSize="inherit" />
+                                                                </IconButton>
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell >
+                                                            <IconButton aria-label="delete" size="large" color="error" onClick={() => deleteBook(row.id)}>
+                                                                <DeleteIcon fontSize="inherit" />
                                                             </IconButton>
-                                                        </Link>
-                                                    </TableCell>
-                                                    <TableCell >
-                                                        <IconButton aria-label="delete" size="large" color="error" onClick={() => deleteBook(row.id)}>
-                                                            <DeleteIcon fontSize="inherit" />
-                                                        </IconButton>
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </>
-                                        :
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                                {moreList.data && moreList.data.map((row, index) => (
+                                                    <TableRow key={index}>
+                                                        <TableCell sx={{ px: 3 }}>
+                                                            {index+current_page+ + 1}
+                                                        </TableCell>
+                                                        <TableCell >
+                                                            <Avatar alt="Remy Sharp" src={row.image} />
+                                                        </TableCell>
 
-                                        <TableRow key='tow'>
+                                                        <TableCell >
+                                                            {row.title}
+                                                        </TableCell>
+                                                        <TableCell >
+                                                            <Link to={'/editbook/' + row.id} style={{ my: 2, mx: 4, display: 'block', width: '100%', height: '100%', textDecoration: 'none' }}>
+                                                                <IconButton aria-label="delete" size="large" color="primary">
+                                                                    <EditIcon fontSize="inherit" />
+                                                                </IconButton>
+                                                            </Link>
+                                                        </TableCell>
+                                                        <TableCell >
+                                                            <IconButton aria-label="delete" size="large" color="error" onClick={() => deleteBook(row.id)}>
+                                                                <DeleteIcon fontSize="inherit" />
+                                                            </IconButton>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
 
-                                            <TableCell >
-                                                <Stack sx={{ width: '80%', mx: 'auto', direction: 'rtl' }} spacing={2}>
-                                                    <Alert severity="error">
-                                                        <AlertTitle>کاربر عزیز</AlertTitle>
-                                                        شما هیچ کتابی را اضافه نکرده اید <strong>  <Link style={{ textDecoration: 'none', width: '100%', color: colorText }} to='/'>ورود ب صفحه اصلی</Link></strong>
-                                                    </Alert>
-                                                </Stack>
-                                            </TableCell>
-                                        </TableRow>
 
-                                    }
+                                            </>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                {nextPageurl &&
+                                    <Stack sx={{ width: '50%', mx: 'auto', my: 5, direction: 'rtl' }} spacing={2}>
+                                        <Button variant="contained" onClick={nextPage}>
+                                            مشاهده ی بیشتر
+                                        </Button>
+                                    </Stack>
+                                }
 
-
-                                </TableBody>
-
-                            </Table>
-                        </TableContainer>
+                            </>
+                            :
+                            <Stack sx={{ width: '80%', mx: 'auto', direction: 'rtl' }} spacing={2}>
+                                <Alert severity="error">
+                                    <AlertTitle>کاربر عزیز</AlertTitle>
+                                    شما هیچ کتابی را اضافه نکرده اید <strong>  <Link style={{ textDecoration: 'none', width: '100%', color: colorText }} to='/'>ورود ب صفحه اصلی</Link></strong>
+                                </Alert>
+                            </Stack>
+                        }
                     </>
                     :
                     <>
                         <MenuTop />
-                        <Stack sx={{ width: '80%', mx: 'auto', direction: 'rtl' }} spacing={2}>
+                        <Stack sx={{ width: '80%', mx: 'auto', direction: 'rtl' }} >
                             <Alert severity="error">
                                 <AlertTitle>کاربر عزیز</AlertTitle>
                                 شما به این قسمت از سایت دسترسی ندارید ! <strong>  <Link style={{ textDecoration: 'none', width: '100%', color: colorText }} to='/'>ورود ب صفحه اصلی</Link></strong>

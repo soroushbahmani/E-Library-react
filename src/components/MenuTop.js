@@ -24,12 +24,15 @@ import BookIcon from '@mui/icons-material/Book';
 import HomeIcon from '@mui/icons-material/Home';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Auth from './AuthContext';
+import Search from './SeachContext';
 import axios from "axios";
 import Loading from './Loading';
-
+import SearchIcon from '@mui/icons-material/Search';
 import { toast } from 'react-toastify';
 import { grey } from '@mui/material/colors';
-import { Button } from '@mui/material';
+import { alpha, Button, InputBase } from '@mui/material';
+
+
 const colorText = grey[600];
 const drawerWidth = 240;
 
@@ -79,32 +82,20 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerRight() {
+  const Navigation = useNavigate();
   const token = useContext(Auth)
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-
-  const Navigation = useNavigate();
-
-
+  const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     // console.log(data);
     if (data.data) {
-    token.token = false;
+      token.token = false;
 
-    
-    toast.error(`${data.data}`, {
+
+      toast.error(`${data.data}`, {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -114,163 +105,219 @@ export default function PersistentDrawerRight() {
         progress: undefined,
         theme: 'colored'
       });
-      
-      
+
+
       Navigation('/signin')
       setLoading(false)
     }
-    
-  }, [data,loading])
 
+  }, [data, loading])
 
   const logOutHandler = () => {
 
     setLoading(true)
-    
+
     axios.post(
-      'api/logout',null,
+      'api/logout', null,
       {
-        headers: {'Authorization': `Bearer ${token.token}`}
+        headers: { 'Authorization': `Bearer ${token.token}` }
       }
     ).then(res => setData(res.data)).catch(console.log);
 
   }
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+
+
+
+
 
   return (
     <>
-    {loading ?
-     <Loading />
-    :
-      <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} style={{height:'65px'}}>
-        <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1, textAlign: 'center' }} component="div">
-            کتابخانه الکترونیکی
-          </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            sx={{ ...(open && { display: 'none' }) }}
+      {loading ?
+        <Loading />
+        :
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar position="fixed" open={open} style={{ height: '65px' }}>
+            <Toolbar>
+           
+              <Typography variant="h6" noWrap sx={{ flexGrow: 1, textAlign: 'center' }} component="div">
+                کتابخانه الکترونیکی
+              </Typography>
+
+
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="end"
+                onClick={handleDrawerOpen}
+                sx={{ ...(open && { display: 'none' }) }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+
+            </Toolbar>
+          </AppBar>
+          <Main open={open} style={{ padding: '0' }}>
+            <DrawerHeader />
+          </Main>
+          <Drawer
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {
+                width: drawerWidth,
+              },
+            }}
+            variant="persistent"
+            anchor="right"
+            open={open}
           >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Main open={open} style={{padding:'0'}}>
-        <DrawerHeader />
-      </Main>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-          },
-        }}
-        variant="persistent"
-        anchor="right"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
+            <DrawerHeader>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
 
-          <ListItem  >
-            <ListItemButton>
-              <ListItemIcon>
-                < HomeIcon />
-              </ListItemIcon>
-              <ListItemText  >
-                <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/'> صفحه اصلی</Link>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-
-
-          <ListItem  >
-            <ListItemButton>
-              <ListItemIcon>
-                < PermIdentityIcon />
-              </ListItemIcon>
-              <ListItemText  >
-                <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/profile'>  پروفایل</Link>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-
-          {token.admin &&
-            <ListItem  >
-              <ListItemButton>
-                <ListItemIcon>
-                  < MenuBookIcon />
-                </ListItemIcon>
-                <ListItemText  >
-                  <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/listbook'>مدیریت کتاب ها</Link>
-                </ListItemText>
-              </ListItemButton>
-            </ListItem>
-          }
-
-
-
-          <ListItem  >
-            <ListItemButton>
-              <ListItemIcon>
-                < BookIcon />
-              </ListItemIcon>
-              <ListItemText  >
-                <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/bookme'>   کتابخانه ی من</Link>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-
-          {!token.token && <ListItem  >
-            <ListItemButton>
-              <ListItemIcon>
-                < HowToRegIcon />
-              </ListItemIcon>
-              <ListItemText  >
-                <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/signin'>  ورود و ثبت نام</Link>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
-          }
-
-
-          {token.token &&
-            <ListItem  >
-              <Button onClick={logOutHandler} style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} >
+              <ListItem  >
                 <ListItemButton>
                   <ListItemIcon>
-                    < PowerSettingsNewIcon />
+                    < HomeIcon />
                   </ListItemIcon>
                   <ListItemText  >
-                    خروج
+                    <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/'> صفحه اصلی</Link>
                   </ListItemText>
                 </ListItemButton>
-              </Button>
-            </ListItem>
-          }
+              </ListItem>
 
 
-        </List>
-        <Divider />
 
-      </Drawer>
-    </Box>
-    }
-    
+              <ListItem  >
+                <ListItemButton>
+                  <ListItemIcon>
+                    < PermIdentityIcon />
+                  </ListItemIcon>
+                  <ListItemText  >
+                    <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/profile'>  پروفایل</Link>
+                  </ListItemText>
+                </ListItemButton>
+              </ListItem>
+
+
+              {token.admin &&
+                <ListItem  >
+                  <ListItemButton>
+                    <ListItemIcon>
+                      < MenuBookIcon />
+                    </ListItemIcon>
+                    <ListItemText  >
+                      <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/listbook'>مدیریت کتاب ها</Link>
+                    </ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              }
+
+
+
+              <ListItem  >
+                <ListItemButton>
+                  <ListItemIcon>
+                    < BookIcon />
+                  </ListItemIcon>
+                  <ListItemText  >
+                    <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/bookme'>   کتابخانه ی من</Link>
+                  </ListItemText>
+                </ListItemButton>
+              </ListItem>
+
+
+              {!token.token && <ListItem  >
+                <ListItemButton>
+                  <ListItemIcon>
+                    < HowToRegIcon />
+                  </ListItemIcon>
+                  <ListItemText  >
+                    <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/signin'>  ورود و ثبت نام</Link>
+                  </ListItemText>
+                </ListItemButton>
+              </ListItem>
+              }
+
+
+              {token.token &&
+                <ListItem  >
+                  <Button onClick={logOutHandler} style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} >
+                    <ListItemButton>
+                      <ListItemIcon>
+                        < PowerSettingsNewIcon />
+                      </ListItemIcon>
+                      <ListItemText  >
+                        خروج
+                      </ListItemText>
+                    </ListItemButton>
+                  </Button>
+                </ListItem>
+              }
+
+
+            </List>
+            <Divider />
+
+          </Drawer>
+        </Box>
+      }
+
     </>
-    
+
   );
 }
