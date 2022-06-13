@@ -53,7 +53,7 @@ export default function Profile() {
   }
 
   useEffect(() => {
-
+    token.admin || token.token &&
     axios.get('api/info',
       {
         headers: {
@@ -70,6 +70,7 @@ export default function Profile() {
 
       })
       .catch(error => console.log(error))
+      
     if (data.error) {
       console.log(data);
       toast.error(`${data}`, {

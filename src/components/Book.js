@@ -9,18 +9,22 @@ import Typography from '@mui/material/Typography';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import Tooltip from '@mui/material/Tooltip';
 import { Link } from "react-router-dom";
-import { blue, purple } from '@mui/material/colors';
+import { blue, purple, teal } from '@mui/material/colors';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Auth from './AuthContext';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import BookmarkRemoveIcon from '@mui/icons-material/BookmarkRemove';
-
+import ShareIcon from '@mui/icons-material/Share';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Fade from '@mui/material/Fade';
 
 
 const colorText = blue[800];
 const colorText1 = purple[600];
-
+const colorText2 = teal[900];
+var host = window.location.origin;
 export default function Book(props) {
 
     // console.log(props);
@@ -109,19 +113,26 @@ export default function Book(props) {
                 console.log(error);
             })
     }
-
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <>
 
             {
 
-                <Grid sx={{ my: 2, mx: 2, direction: 'rtl' }}>
+                <Grid sx={{ my: 2, mx: 2, mt:7, direction: 'rtl' }}>
                     <Card sx={{ maxWidth: 245, width: 400, height: '400px', mx: 'auto', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                         <CardActionArea sx={{ textAlign: 'right' }}>
                             <CardMedia
 
-                                sx={{ objectFit: 'contain', p: 1, height: "188px" }}
+                                sx={{  p: 1, height: "188px" }}
                                 component="img"
 
                                 image={props.image}
@@ -131,8 +142,8 @@ export default function Book(props) {
                                 <Typography gutterBottom variant="h6" component="div">
                                     {props.title}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'justify', textOverflow: 'ellipsis' , mt:2 }}>
-                                    <b>نویسنده : </b>   
+                                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'justify', textOverflow: 'ellipsis', mt: 2 }}>
+                                    <b>نویسنده : </b>
                                     {
 
                                         props.author ?
@@ -141,8 +152,8 @@ export default function Book(props) {
                                             "  توضیحاتی ندارد  "
                                     }
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'justify', textOverflow: 'ellipsis' , mt:2 }}>
-                                    <b>توضیحات : </b>  
+                                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'justify', textOverflow: 'ellipsis', mt: 2 }}>
+                                    <b>توضیحات : </b>
                                     {
                                         props.description ?
                                             props.description.substr(0, 43)
@@ -173,19 +184,48 @@ export default function Book(props) {
                                 props.token ?
 
                                     <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                        <Tooltip title="خواندن کتاب" placement="right">
+                                        <Tooltip title="جزئیات کتاب" placement="right">
                                             <Link to={`/ditails/${props.id}`} style={{ textDecoration: 'none', color: colorText1 }} variant="body2"> <RemoveRedEyeIcon /></Link>
                                         </Tooltip>
                                     </Grid> :
                                     <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                        <Tooltip title="خواندن کتاب" placement="right">
+                                        <Tooltip title="جزئیات کتاب" placement="right">
                                             <Button onClick={goSignin} style={{ textDecoration: 'none', color: colorText1 }} variant="body2"> <RemoveRedEyeIcon /></Button>
                                         </Tooltip>
                                     </Grid>
 
 
                             }
+                            <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <Tooltip title="اشتراک گذاشتن" placement="bottom">
+                                    <Button   id="fade-button"
+                                    aria-controls={open ? 'fade-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick} style={{ textDecoration: 'none', color: colorText2 }} variant="body2"> <ShareIcon /></Button>
+                                </Tooltip>
 
+                           
+                                <Menu
+                                    id="fade-menu"
+                                    MenuListProps={{
+                                        'aria-labelledby': 'fade-button',
+                                    }}
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    TransitionComponent={Fade}
+                                >
+                                    <MenuItem onClick={handleClose}>
+                                        <a target='_blank' rel="noreferrer"  href={`https://wa.me/${host}/ditails/${props.id}`} style={{textDecoration:'none', color:colorText}}>whatsapp</a>
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                        <a target='_blank' rel="noreferrer"  href={`https://telegram.me/11`} style={{textDecoration:'none', color:colorText}}>telegram</a>
+                                    </MenuItem>
+                             
+                                </Menu>
+
+                            </Grid>
                             {
                                 props.token ?
                                     props.saveHide &&

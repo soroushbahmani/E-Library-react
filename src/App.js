@@ -14,9 +14,10 @@ import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import ListBook from './components/ListBook';
 import EditBook from './components/EditBook';
+import { Typography } from '@mui/material';
+import ReadBook from './components/ReadBook';
 
 axios.defaults.baseURL = 'http://library.erimo.ir';
-
 function App() {
 
   return (
@@ -33,14 +34,13 @@ function App() {
           <Route path="addbook" element={<AddBook />} />
           <Route path="editbook/:id" element={<EditBook />} />
           <Route path="listbook" element={<ListBook />} />
-          
+          <Route path="reading/:id" element={<ReadBook />} />
           <Route path="bookme" element={<BookMe />} />
           <Route path="profile" element={<Profile />} />
         </Routes>
         <Outlet />
       </Auth.Provider>
       <ToastContainer />
-
 
     </div>
   );

@@ -25,7 +25,10 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    margin: 0;
+      margin: 0 10px;
+    direction: rtl;
+    border-radius: 10px;
+    background-color: #00000066;
   }
   ul  li{
       padding: 7px  0;
@@ -34,6 +37,7 @@
   @media  (max-width: 600px) {
     .each-fade p{
         display: none;
+      
     }  
 
   .each-fade > div img {
@@ -66,4 +70,34 @@ width: 100%;
   
     color: #1976d2;
     font-size: 30px;
+  }
+  .nav[data-type = 'prev'] {
+    display: none;
+  }  .nav[data-type = 'next'] {
+    display: none;
+  }
+  h3{
+    background-color: #00000066;
+    padding: 5px 20px;
+    border-radius: 5px;
+  }
+  h2{
+    width: 300px;
+    background-color: #00000066;
+    margin: auto;
+    text-align: center;
+    border-radius: 5px;
+    padding:  5px 0;
+
+
+  }
+
+  input{
+    text-align: center !important;
+  }
+
+  .general{
+    background: url('./bg.jpg');
+    color: white !important;
+    height: 100% !important;
   }

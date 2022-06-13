@@ -43,7 +43,7 @@ export default function BookMe() {
 
 
     return (
-        <>
+        <div className='general'>
             {
                 token.token ?
                     loading ? <Loading /> :
@@ -51,7 +51,7 @@ export default function BookMe() {
                         <>
 
                             <MenuTop />
-                            <Box sx={{ mx: 'auto', mt: 4 }}>
+                            <Box sx={{ mx: 'auto', p: 7 }}>
                                 <Grid
                                     container
                                     direction="row"
@@ -90,6 +90,6 @@ export default function BookMe() {
 
                     </>}
 
-        </>
+        </div>
     )
 }

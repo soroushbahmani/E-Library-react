@@ -26,48 +26,9 @@ import imagetwo from './slide1.svg'
 import imagethree from './slide2.svg'
 import imagefor from './slide3.svg'
 import imagefive from './slide5.svg'
-// slider 1
-const properties = {
-    duration: 2500,
-    transitionDuration: 500,
-    infinite: true,
-    autoplay: true,
-    prevArrow: <div style={{ display: 'none' }}></div>,
-    nextArrow: <div style={{ display: 'none' }}></div>
-};
-// slider 2
-const settings = {
-    dots: true,
-    infinite: true,
-    speed: 800,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 1500,
-    arrows: false,
-    rtl: true,
-    responsive: [
-        {
-            breakpoint: 1000,
-            settings: {
-                arrows: false,
-                centerMode: true,
-             
-                centerPadding: '40px',
-                slidesToShow: 1
-            }
-        },
-        {
-            breakpoint: 500,
-            settings: {
-                arrows: false,
-                centerMode: true,
-                centerPadding: '40px',
-                slidesToShow: 1
-            }
-        }
-    ]
-};
+import { lime } from '@mui/material/colors';
+const colorText = lime['300'];
+
 
 export default function BasicGrid() {
     const Navigation = useNavigate();
@@ -80,41 +41,70 @@ export default function BasicGrid() {
     const [open, setOpen] = useState(false);
     const [randomBook, setRandomBook] = useState({});
 
+    // slider 2
+    const settings = {
+        lazyLoad: 'ondemand',
+        cssEase: 'linear',
+        centerMode: true,
+        dots: true,
+        infinite: true,
+        speed: 800,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1500,
+        arrows: false,
+        rtl: true,
+        responsive: [
+            {
+                breakpoint: 1000,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 500,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+    };
     useEffect(() => {
-        //axios
-        axios.get('api/books')
-            .then(res => {
-                setData(res.data);
-                setnaxtPageurl(res.data.next_page_url)
-                setLoading(false)
-            })
-            .catch(error => {
-                setLoading(true)
-            })
+        let one = "api/books"
+        let two = "api/books/random"
 
-        axios.get('api/books/random')
-            .then(res => {
-                setRandomBook(res.data);
-                setLoading(false)
-            })
-            .catch(error => {
-                setLoading(true)
-            })
+        var requestOne = axios.get(one);
+        var requestTwo = axios.get(two);
+
+        axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+            const data = responses[0]
+            const random = responses[1]
+            setData(data.data);
+            setnaxtPageurl(data.data.next_page_url)
+            setRandomBook(random.data);
+            setLoading(true)
+        })).catch(errors => {
+            setLoading(true)
+            Navigation('/')
+        })
 
     }, [])
 
 
     useEffect(() => {
         (Search === '' || Search === null) &&
-
             axios.get('api/books')
                 .then(res => {
-
-
                     setData(res.data);
                     setnaxtPageurl(res.data.next_page_url)
                     setLoading(false)
-
                 })
                 .catch(error => {
                     Navigation('/')
@@ -164,7 +154,7 @@ export default function BasicGrid() {
     }
     return (
 
-        <>
+        <div className='general'>
             {loading ? <Loading /> :
 
                 <>
@@ -173,11 +163,11 @@ export default function BasicGrid() {
 
 
                     {/* search */}
-                    <Stack sx={{ width: '100%', my: 5, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'fixed', top: '50px', zIndex: '222' }} spacing={2}>
+                    <Stack sx={{ width: '100%', my: 5, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'fixed', top: '50px', zIndex: '222',textAlign:'center' }} spacing={2}>
                         <Paper
                             onSubmit={submithandler}
                             component="form"
-                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "50%" }}
+                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "50%",textAlign:'center' }}
                         >
 
                             <InputBase
@@ -196,7 +186,7 @@ export default function BasicGrid() {
                     {/* slider 1 */}
                     <>
                         <div className="slide-container">
-                            <Slide {...properties} >
+                            <Slide duration={'2500'} transitionDuration={'500'} infinite={'true'} autoplay={'true'}>
                                 <div className="each-fade">
                                     <div>
                                         <img src={imageOne} alt='image0' />
@@ -261,23 +251,25 @@ export default function BasicGrid() {
                         </div>
                     </>
 
-                    {/* slider 2 */}
-                    <h2 style={{ textAlign: 'center', paddingTop: '30px' }}> کتاب های پیشنهادی</h2>
+<br/>
+<br/>
+                  {/* slider 2 */}
+                    <h2 style={{ textAlign: 'center' , marginTop:'80px' }}> کتاب های پیشنهادی</h2>
                     <Box sx={{ my: 10, p: 0, width: '100%' }}>
                         <Slider className='Slider' style={{ width: '70%', margin: 'auto', padding: 0 }} {...settings}>
-                            {randomBook.map((res, index) => <div key={index}>
+                            {(randomBook !== {} && randomBook !== null && randomBook !== false) ? randomBook.map((res, index) => <div key={index}>
                                 <img src={res.image} alt='image3' />
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <h3>{res.title}</h3>
 
                                     <Tooltip title="خواندن کتاب" placement="bottom">
-                                        <Link style={{ textDecoration: 'none' }} to='/signin'>
+                                        <Link style={{ textDecoration: 'none' , color:colorText }} to={`/ditails/${res.id}`}>
                                             <MenuBookIcon />
                                         </Link>
                                     </Tooltip>
 
                                 </div>
-                            </div>)}
+                            </div>) : ''}
 
                         </Slider>
                     </Box>
@@ -291,9 +283,9 @@ export default function BasicGrid() {
                             </Alert>
                         </Stack>
                     }
-            {data.data && 
-                    <h2 style={{ textAlign: 'center', paddingTop: '30px' }}> همه ی کتاب ها  </h2>
-            }
+                    {data.data.length > 0 &&
+                        <h2 style={{ textAlign: 'center' }}> همه ی کتاب ها  </h2>
+                    }
 
                     {/* books */}
                     <Box sx={{ mx: 'auto', mt: 2 }}>
@@ -307,8 +299,8 @@ export default function BasicGrid() {
                             {(moreList.data && data.data.length > 0) && moreList.data.map(res => <Book key={res.id} saveHide={true} token={token.token}  {...res} />)}
                         </Grid>
                         {nextPageurl &&
-                            <Stack sx={{ width: '50%', mx: 'auto', my: 5, direction: 'rtl' }} spacing={2}>
-                                <Button variant="contained" onClick={nextPage}>
+                            <Stack sx={{ width: '50%', mx: 'auto', py: 5, direction: 'rtl' }} spacing={2}>
+                                <Button variant="contained"  size='large' onClick={nextPage}>
                                     مشاهده ی کتاب های بیشتر
                                 </Button>
                             </Stack>
@@ -324,7 +316,7 @@ export default function BasicGrid() {
                 </>
 
             }
-        </>
+        </div>
     );
 }
 
