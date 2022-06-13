@@ -8,14 +8,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import Tooltip from '@mui/material/Tooltip';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { blue, purple } from '@mui/material/colors';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Auth from './AuthContext';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import BookmarkRemoveIcon from '@mui/icons-material/BookmarkRemove';
-import Loading from './Loading';
 
 
 

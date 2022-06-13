@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Alert, AlertTitle, Button, Stack, TextField, Typography } from '@mui/material';
 import Auth from './AuthContext';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loading from './Loading';
 import axios from "axios";
 import { toast } from 'react-toastify';
@@ -30,7 +30,7 @@ export default function AddBook() {
 
     useEffect(() => {
 
-        if ( token.admin) {
+        if (token.admin) {
             //error
             if (data.error) {
                 Object.values(data.data).map(error => toast.error(`${error}`, {

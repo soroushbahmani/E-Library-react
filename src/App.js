@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route, Outlet } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import General from './components/General';
