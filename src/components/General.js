@@ -44,12 +44,15 @@ const settings = {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 1500,
+    arrows: false,
+    rtl: true,
     responsive: [
         {
             breakpoint: 1000,
             settings: {
                 arrows: false,
                 centerMode: true,
+             
                 centerPadding: '40px',
                 slidesToShow: 1
             }
@@ -150,7 +153,7 @@ export default function BasicGrid() {
                 setnaxtPageurl(res.data.next_page_url)
                 setOpen(false)
                 window.scrollTo({
-                    top: 350,
+                    top: 880,
                     behavior: 'smooth',
                 })
 
@@ -288,7 +291,9 @@ export default function BasicGrid() {
                             </Alert>
                         </Stack>
                     }
+            {data.data && 
                     <h2 style={{ textAlign: 'center', paddingTop: '30px' }}> همه ی کتاب ها  </h2>
+            }
 
                     {/* books */}
                     <Box sx={{ mx: 'auto', mt: 2 }}>
