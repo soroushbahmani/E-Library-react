@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, Outlet } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
 import General from './components/General';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
@@ -10,26 +9,33 @@ import AddBook from './components/AddBook';
 import BookMe from './components/BookMe';
 import Auth from './components/AuthContext';
 import Profile from './components/Profile';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import ListBook from './components/ListBook';
 import EditBook from './components/EditBook';
-import { Typography } from '@mui/material';
 import ReadBook from './components/ReadBook';
+import AboutUs from './components/AboutUs';
+import ContactUs from './components/ContactUs';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import EditAboutUS from './components/EditAboutUs';
+import EditContactUs from './components/EditContactUs';
 
 axios.defaults.baseURL = 'http://library.erimo.ir';
 function App() {
 
   return (
-    <div>
-
+    <>
       <Auth.Provider value={{ token: false }}>
-
         <Routes>
           <Route path="/" element={<General />} />
           <Route path="/*" element={<General />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="signin" element={<SignIn />} />
+          <Route path="aboutus" element={<AboutUs />} />
+          <Route path="editabout" element={<EditAboutUS />} />
+          <Route path="editcontactus" element={<EditContactUs />} />
+          
+          <Route path="contactus" element={<ContactUs />} />
           <Route path="ditails/:id" element={<Ditails />} />
           <Route path="addbook" element={<AddBook />} />
           <Route path="editbook/:id" element={<EditBook />} />
@@ -42,7 +48,7 @@ function App() {
       </Auth.Provider>
       <ToastContainer />
 
-    </div>
+    </>
   );
 }
 

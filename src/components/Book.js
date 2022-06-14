@@ -128,7 +128,7 @@ export default function Book(props) {
             {
 
                 <Grid sx={{ my: 2, mx: 2, mt:7, direction: 'rtl' }}>
-                    <Card sx={{ maxWidth: 245, width: 400, height: '400px', mx: 'auto', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
+                    <Card sx={{ maxWidth: 245, width: 400, height: '420px', mx: 'auto', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                         <CardActionArea sx={{ textAlign: 'right' }}>
                             <CardMedia
 
@@ -174,15 +174,10 @@ export default function Book(props) {
                                         </IconButton>
                                     </Tooltip>
                                 </Grid>
-
-
-
                                 : ''
-
                             }
                             {
                                 props.token ?
-
                                     <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                                         <Tooltip title="جزئیات کتاب" placement="right">
                                             <Link to={`/ditails/${props.id}`} style={{ textDecoration: 'none', color: colorText1 }} variant="body2"> <RemoveRedEyeIcon /></Link>
@@ -193,8 +188,6 @@ export default function Book(props) {
                                             <Button onClick={goSignin} style={{ textDecoration: 'none', color: colorText1 }} variant="body2"> <RemoveRedEyeIcon /></Button>
                                         </Tooltip>
                                     </Grid>
-
-
                             }
                             <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                                 <Tooltip title="اشتراک گذاشتن" placement="bottom">
@@ -204,8 +197,6 @@ export default function Book(props) {
                                     aria-expanded={open ? 'true' : undefined}
                                     onClick={handleClick} style={{ textDecoration: 'none', color: colorText2 }} variant="body2"> <ShareIcon /></Button>
                                 </Tooltip>
-
-                           
                                 <Menu
                                     id="fade-menu"
                                     MenuListProps={{
@@ -220,7 +211,7 @@ export default function Book(props) {
                                         <a target='_blank' rel="noreferrer"  href={`https://wa.me/${host}/ditails/${props.id}`} style={{textDecoration:'none', color:colorText}}>whatsapp</a>
                                     </MenuItem>
                                     <MenuItem onClick={handleClose}>
-                                        <a target='_blank' rel="noreferrer"  href={`https://telegram.me/11`} style={{textDecoration:'none', color:colorText}}>telegram</a>
+                                        <a target='_blank' rel="noreferrer"  href={`https://telegram.me/${host}/ditails/${props.id}`} style={{textDecoration:'none', color:colorText}}>telegram</a>
                                     </MenuItem>
                              
                                 </Menu>

@@ -29,10 +29,11 @@ import Loading from './Loading';
 import { toast } from 'react-toastify';
 import { grey } from '@mui/material/colors';
 import { alpha, Button, InputBase } from '@mui/material';
-
-
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import EditIcon from '@mui/icons-material/Edit';
 const colorText = grey[600];
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -171,11 +172,6 @@ export default function PersistentDrawerRight() {
     setOpen(false);
   };
 
-
-
-
-
-
   return (
     <>
       {loading ?
@@ -185,12 +181,9 @@ export default function PersistentDrawerRight() {
           <CssBaseline />
           <AppBar position="fixed" open={open} style={{ height: '65px' }}>
             <Toolbar>
-           
               <Typography variant="h6" noWrap sx={{ flexGrow: 1, textAlign: 'center' }} component="div">
                 کتابخانه الکترونیکی
               </Typography>
-
-
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -200,8 +193,6 @@ export default function PersistentDrawerRight() {
               >
                 <MenuIcon />
               </IconButton>
-
-
             </Toolbar>
           </AppBar>
           <Main open={open} style={{ padding: '0' }}>
@@ -225,27 +216,24 @@ export default function PersistentDrawerRight() {
               </IconButton>
             </DrawerHeader>
             <Divider />
-            <List>
+            <List style={{ direction: 'rtl' }}>
 
-              <ListItem  >
+              <ListItem>
                 <ListItemButton>
                   <ListItemIcon>
                     < HomeIcon />
                   </ListItemIcon>
-                  <ListItemText  >
+                  <ListItemText style={{ textAlign: 'center' }} >
                     <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/'> صفحه اصلی</Link>
                   </ListItemText>
                 </ListItemButton>
               </ListItem>
-
-
-
               <ListItem  >
                 <ListItemButton>
                   <ListItemIcon>
                     < PermIdentityIcon />
                   </ListItemIcon>
-                  <ListItemText  >
+                  <ListItemText style={{ textAlign: 'center' }} >
                     <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/profile'>  پروفایل</Link>
                   </ListItemText>
                 </ListItemButton>
@@ -258,8 +246,35 @@ export default function PersistentDrawerRight() {
                     <ListItemIcon>
                       < MenuBookIcon />
                     </ListItemIcon>
-                    <ListItemText  >
+                    <ListItemText style={{ textAlign: 'center' }} >
                       <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/listbook'>مدیریت کتاب ها</Link>
+                    </ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              }
+            
+              {
+              token.admin &&
+                <ListItem  >
+                  <ListItemButton>
+                    <ListItemIcon>
+                      < EditIcon />
+                    </ListItemIcon>
+                    <ListItemText style={{ textAlign: 'center' }} >
+                      <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/editabout'> ویرایش درباره ی ما</Link>
+                    </ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              }
+                      {
+              token.admin &&
+                <ListItem  >
+                  <ListItemButton>
+                    <ListItemIcon>
+                      < EditIcon />
+                    </ListItemIcon>
+                    <ListItemText style={{ textAlign: 'center' }} >
+                      <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/editcontactus'> ویرایش   تماس با ما</Link>
                     </ListItemText>
                   </ListItemButton>
                 </ListItem>
@@ -272,19 +287,42 @@ export default function PersistentDrawerRight() {
                   <ListItemIcon>
                     < BookIcon />
                   </ListItemIcon>
-                  <ListItemText  >
+                  <ListItemText style={{ textAlign: 'center' }}  >
                     <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/bookme'>   کتابخانه ی من</Link>
                   </ListItemText>
                 </ListItemButton>
               </ListItem>
 
+              <ListItem  >
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AssignmentIndIcon />
+                  </ListItemIcon>
+                  <ListItemText style={{ textAlign: 'center' }} >
+                    <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/aboutus'>درباره ی ما </Link>
+                  </ListItemText>
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem  >
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ContactPhoneIcon />
+                  </ListItemIcon>
+                  <ListItemText style={{ textAlign: 'center' }} >
+                    <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/contactus'>تماس با ما </Link>
+                  </ListItemText>
+                </ListItemButton>
+              </ListItem>
+
+              
 
               {!token.token && <ListItem  >
                 <ListItemButton>
                   <ListItemIcon>
                     < HowToRegIcon />
                   </ListItemIcon>
-                  <ListItemText  >
+                  <ListItemText style={{ textAlign: 'center' }} >
                     <Link style={{ textDecoration: 'none', width: '100%', display: 'block', color: colorText }} to='/signin'>  ورود و ثبت نام</Link>
                   </ListItemText>
                 </ListItemButton>
@@ -299,7 +337,7 @@ export default function PersistentDrawerRight() {
                       <ListItemIcon>
                         < PowerSettingsNewIcon />
                       </ListItemIcon>
-                      <ListItemText  >
+                      <ListItemText style={{ textAlign: 'center' }} >
                         خروج
                       </ListItemText>
                     </ListItemButton>

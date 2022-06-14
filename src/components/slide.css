@@ -18,7 +18,7 @@
     object-fit: contain;
   }
   
-  .each-fade p {
+  .each-fade .slide-text  {
     width: 50%;
     font-size: 1em;
     display: flex;
@@ -30,6 +30,7 @@
     border-radius: 10px;
     background-color: #00000066;
   }
+  
   ul  li{
       padding: 7px  0;
   }
@@ -76,12 +77,12 @@ width: 100%;
   }  .nav[data-type = 'next'] {
     display: none;
   }
-  h3{
+  .titleh3{
     background-color: #00000066;
     padding: 5px 20px;
     border-radius: 5px;
   }
-  h2{
+  .titleh2{
     width: 300px;
     background-color: #00000066;
     margin: auto;
@@ -99,5 +100,5 @@ width: 100%;
   .general{
     background: url('./bg.jpg');
     color: white !important;
-    height: 100% !important;
+ 
   }

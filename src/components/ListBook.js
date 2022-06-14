@@ -43,7 +43,6 @@ export default function CustomPaginationActionsTable() {
                     }
                 })
                 .then(res => {
-                    console.log(res);
                     setList(res.data)
                     setLoading(true)
                     setnaxtPageurl(res.data.next_page_url)
@@ -78,7 +77,6 @@ export default function CustomPaginationActionsTable() {
         }
     }, [])
 
-    console.log(current_page);
 
     const deleteBook = (event) => {
 

@@ -14,12 +14,11 @@ import Loading from './Loading';
 const colorText = purple[600];
 
 
-
-
 export default function BookMe() {
     const token = useContext(Auth)
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
+    var height = Math.max(window.innerHeight);
     useEffect(() => {
         //axios
         axios.get('api/library',
@@ -43,7 +42,7 @@ export default function BookMe() {
 
 
     return (
-        <div className='general'>
+        <div className='general' style={{height:height}}>
             {
                 token.token ?
                     loading ? <Loading /> :

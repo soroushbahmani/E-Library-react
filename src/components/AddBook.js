@@ -111,7 +111,8 @@ export default function AddBook() {
           progress: undefined,
           theme: 'colored'
         })
-        Navigation('/')})
+        Navigation('/')
+    })
     };
 
 

@@ -26,6 +26,7 @@ import imagetwo from './slide1.svg'
 import imagethree from './slide2.svg'
 import imagefor from './slide3.svg'
 import imagefive from './slide5.svg'
+import { toast } from 'react-toastify';
 import { lime } from '@mui/material/colors';
 const colorText = lime['300'];
 
@@ -152,6 +153,19 @@ export default function BasicGrid() {
                 Navigation('/')
             })
     }
+
+    const goSignin = () => {
+        toast.error(`کاربر عزیز شما وارد سایت نشدید`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+    }
     return (
 
         <div className='general'>
@@ -160,14 +174,12 @@ export default function BasicGrid() {
                 <>
                     <MenuTop />
 
-
-
                     {/* search */}
-                    <Stack sx={{ width: '100%', my: 5, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'fixed', top: '50px', zIndex: '222',textAlign:'center' }} spacing={2}>
+                    <Stack sx={{ width: '100%', my: 5, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'fixed', top: '50px', zIndex: '222', textAlign: 'center' }} spacing={2}>
                         <Paper
                             onSubmit={submithandler}
                             component="form"
-                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "50%",textAlign:'center' }}
+                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: "50%", textAlign: 'center' }}
                         >
 
                             <InputBase
@@ -191,14 +203,14 @@ export default function BasicGrid() {
                                     <div>
                                         <img src={imageOne} alt='image0' />
                                     </div>
-                                    <p style={{ padding: '10px 30px', textAlign: 'justify', direction: 'rtl' }}>
+                                    <div className='slide-text' style={{ padding: '10px 30px', textAlign: 'justify', direction: 'rtl' }}>
 
                                         مرجع قانونی دانلود کتاب الکترونیکی  است که امکان دسترسی به هزاران کتاب، رمان، مجله و کتاب صوتی و همچنین خرید کتاب الکترونیک از طریق موبایل تبلت و رایانه برای شما فراهم می‌کند. شما با استفاده از کتابراه همیشه و همه جا به کتاب‌ها و کتابخانه خود دسترسی دارید و می‌توانید به سادگی از هر فرصتی برای مطالعه استفاده کنید. در کتابراه برای همه سلیقه‌ها از داستان، رمان و شعر تا روانشناسی، تاریخی، علمی، موفقیت و... کتاب‌هایی پیدا می شود. همچنین در کتابراه هزاران کتاب رایگان نیز قابل دانلود است. اپلیکیشن کتابخوان  برای اندروید، IOS و ویندوز در دسترس است.
-                                    </p>
+                                    </div>
                                 </div>
                                 <div className="each-fade">
-                                    <p>
 
+                                    <div className='slide-text'>
                                         <ul dir='rtl' style={{ textAlign: 'right' }}>
                                             <li>با بیش از 100000 منبع الکترونیکی رایگان به زبان فارسی ، عربی و انگلیسی</li>
                                             <li>    !   کتابی که تو را با سخت و آسان زندگی آدمی معرف همراه می کند</li>
@@ -207,7 +219,8 @@ export default function BasicGrid() {
                                             <li>  امکان دریافت +۲۰ هزار کتاب رایگان</li>
                                             <li>  ! کتاب هایی برای افزایش اطلاعات عمومی</li>
                                         </ul>
-                                    </p>
+                                    </div>
+
                                     <div>
                                         <img src={imagetwo} alt='image1' />
                                     </div>
@@ -216,17 +229,17 @@ export default function BasicGrid() {
                                     <div>
                                         <img src={imagethree} alt='image2' />
                                     </div>
-                                    <p style={{ padding: '10px 30px', textAlign: 'justify', direction: 'rtl' }}>
+                                    <div className='slide-text' style={{ padding: '10px 30px', textAlign: 'justify', direction: 'rtl' }}>
 
                                         با  کتابخانه الکترونیکی آزمون و خطایی در انتخاب و خرید کتاب در کار نخواهد بود. بهترین و تحسین‌شده‌ترین کتاب‌ های سراسر این کره‌ی خاکی در انواع سبک های گوناگون گرد هم آمده‌اند تا برای کسانی که تمایل به خرید کتاب های ارزشمند دارند، هیچ دغدغه‌ای وجود نداشته باشد. با انتخاب از میان کتاب های متنوع و دست‌چین شده‌ی ایران کتاب، می‌توانید مطمئن باشید که کتابی که خریده اید، ارزش زمانی که برای آن صرف می‌کنید را دارد. ایران‌کتاب، رسالت خود را ارائه‌ی اطلسی جامع از برترین کتاب‌ها و معتبرترین جوایز ادبی سراسر دنیا می‌داند و بر آن است تا با خلق آرمان‌شهری ادبی، بهترین‌ها را در اختیار علاقه‌مندان قرار دهد.
-                                    </p>
+                                    </div>
                                 </div>
                                 <div className="each-fade">
-                                    <p style={{ padding: '10px 30px', textAlign: 'justify', direction: 'rtl' }}>
+                                    <div className='slide-text' style={{ padding: '10px 30px', textAlign: 'justify', direction: 'rtl' }}>
 
 
                                         گستره‌ای از کتاب‌ها و مجلات متنوع برای طیف وسیعی از کاربران تجربه فوق‌العاده خریدکتاب و خواندن آن در دستگاه‌های هوشمند را فراهم کند.در فیدیبو با خرید کتاب از بهترین ناشران ایرانی در موضوعات مختلف، کاربران می‌توانند در اپلیکیشن کتابخانه‌ای‌ شخصی برای خود بسازند و از امکانات منحصر به فرد آن استفاده کنند. برای تیم فیدیبو هدف خرید کتاب نیست بلکه ایجاد محیطی بری ارتباط بیشتر اهالی کتاب است.شایان ذکر است که فیدیبو بعد از خرید کتاب، با تیم پشتیبانی همیشه پاسخگوی کاربران محترم خواهد بود. با دانلود هزاران کتاب صوتی، کتاب دانشگاهی، شعر عاشقانه، رمان عاشقانه ، مادر و کودک و پادکست از فیدیبو، خواندن کتاب را به گونه ای متفاوت تجربه کنیم.
-                                    </p>
+                                    </div>
                                     <div>
                                         <img src={imagefor} alt='image3' />
                                     </div>
@@ -236,7 +249,8 @@ export default function BasicGrid() {
                                     <div>
                                         <img src={imagefive} alt='image4' />
                                     </div>
-                                    <p>
+
+                                    <div className='slide-text'>
                                         <ul dir='rtl' style={{ textAlign: 'right' }}>
                                             <li>با بیش از 100000 منبع الکترونیکی رایگان به زبان فارسی ، عربی و انگلیسی</li>
                                             <li>    !   کتابی که تو را با سخت و آسان زندگی آدمی معرف همراه می کند</li>
@@ -245,29 +259,36 @@ export default function BasicGrid() {
                                             <li>  امکان دریافت +۲۰ هزار کتاب رایگان</li>
                                             <li>  ! کتاب هایی برای افزایش اطلاعات عمومی</li>
                                         </ul>
-                                    </p>
+                                    </div>
+
                                 </div>
                             </Slide>
                         </div>
                     </>
 
-<br/>
-<br/>
-                  {/* slider 2 */}
-                    <h2 style={{ textAlign: 'center' , marginTop:'80px' }}> کتاب های پیشنهادی</h2>
+                    <br />
+                    <br />
+                    {/* slider 2 */}
+                    <h2 className='titleh2' style={{ textAlign: 'center', marginTop: '80px' }}> کتاب های پیشنهادی</h2>
                     <Box sx={{ my: 10, p: 0, width: '100%' }}>
                         <Slider className='Slider' style={{ width: '70%', margin: 'auto', padding: 0 }} {...settings}>
                             {(randomBook !== {} && randomBook !== null && randomBook !== false) ? randomBook.map((res, index) => <div key={index}>
                                 <img src={res.image} alt='image3' />
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <h3>{res.title}</h3>
-
-                                    <Tooltip title="خواندن کتاب" placement="bottom">
-                                        <Link style={{ textDecoration: 'none' , color:colorText }} to={`/ditails/${res.id}`}>
-                                            <MenuBookIcon />
-                                        </Link>
-                                    </Tooltip>
-
+                                    <h3  className='titleh3'>{res.title}</h3>
+                                    {token.token ?
+                                        <Tooltip title="خواندن کتاب" placement="bottom">
+                                            <Link style={{ textDecoration: 'none', color: colorText }} to={`/ditails/${res.id}`}>
+                                                <MenuBookIcon />
+                                            </Link>
+                                        </Tooltip>
+                                        :
+                                        <Tooltip title="خواندن کتاب" placement="bottom">
+                                            <Button onClick={goSignin} style={{ textDecoration: 'none', color: colorText }}>
+                                                <MenuBookIcon />
+                                            </Button>
+                                        </Tooltip>
+                                    }
                                 </div>
                             </div>) : ''}
 
@@ -284,7 +305,7 @@ export default function BasicGrid() {
                         </Stack>
                     }
                     {data.data.length > 0 &&
-                        <h2 style={{ textAlign: 'center' }}> همه ی کتاب ها  </h2>
+                        <h2  className='titleh2' style={{ textAlign: 'center' }}> همه ی کتاب ها  </h2>
                     }
 
                     {/* books */}
@@ -300,7 +321,7 @@ export default function BasicGrid() {
                         </Grid>
                         {nextPageurl &&
                             <Stack sx={{ width: '50%', mx: 'auto', py: 5, direction: 'rtl' }} spacing={2}>
-                                <Button variant="contained"  size='large' onClick={nextPage}>
+                                <Button variant="contained" size='large' onClick={nextPage}>
                                     مشاهده ی کتاب های بیشتر
                                 </Button>
                             </Stack>

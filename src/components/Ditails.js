@@ -4,7 +4,7 @@ import Auth from './AuthContext';
 import Loading from './Loading';
 import { Alert, AlertTitle, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, IconButton, Menu, Stack, Tooltip, Typography } from '@mui/material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { blue, purple, teal,red } from '@mui/material/colors';
+import { blue, purple, teal, red } from '@mui/material/colors';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ShareIcon from '@mui/icons-material/Share';
@@ -28,38 +28,56 @@ export default function Ditails() {
 
   useEffect(() => {
     //axios
-    axios.get(`api/book/${params.id}`, {
-      headers: {
-        'Authorization': `Bearer ${token.token}`,
-        "Content-Type": "multipart/form-data"
-      }
-    })
-      .then(res => {
-        setData(res.data)
-        setLoading(false)
 
+    if (token.token) {
+      axios.get(`api/book/${params.id}`, {
+        headers: {
+          'Authorization': `Bearer ${token.token}`,
+          "Content-Type": "multipart/form-data"
+        }
       })
-      .catch(error => {
-        setLoading(true)
-        Navigation('/')
-        toast.error(`کاربر عزیز شما وارد سایت نشدید`, {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored'
-        });
+        .then(res => {
+          setData(res.data)
+          setLoading(false)
+
+        })
+        .catch(error => {
+
+          toast.error(`خطا با سرور`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+          });
 
 
-      })
+        })
+    }
+
+    else {
+      setLoading(true)
+      Navigation('/')
+      toast.error(`کاربر عزیز شما وارد سایت نشدید`, {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+    }
+
   }, [])
 
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -70,7 +88,7 @@ export default function Ditails() {
   var host = window.location.origin;
 
 
-  
+
   const addLibrary = (id) => {
     //axios
     axios.post(`api/book/${id}`, null, {
@@ -113,7 +131,7 @@ export default function Ditails() {
           token.token ?
             <>
               <MenuTop />
-              <Grid sx={{pt:3, pb: 3, mx: 2, direction: 'rtl' }}>
+              <Grid sx={{ pt: 3, pb: 3, mx: 2, direction: 'rtl' }}>
                 <Card sx={{ width: '50%', mx: 'auto', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                   <CardActionArea sx={{ textAlign: 'right' }}>
                     <CardMedia
@@ -163,9 +181,9 @@ export default function Ditails() {
 
                     <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                       <Tooltip title="دانلود کتاب" placement="top">
-                      <a href={data.data.path}  style={{ textDecoration: 'none', color: colorText3}}  target='_blank' rel="noreferrer" download>
-                        <CloudDownloadIcon/>
-                        </a>                       
+                        <a href={data.data.path} style={{ textDecoration: 'none', color: colorText3 }} target='_blank' rel="noreferrer" download>
+                          <CloudDownloadIcon />
+                        </a>
                       </Tooltip>
                     </Grid>
 
