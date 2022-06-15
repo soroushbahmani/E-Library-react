@@ -98,6 +98,7 @@ width: 100%;
     background-color: #00000066;
     padding: 5px 20px;
     border-radius: 5px;
+    direction: rtl;
   }
   .titleh2{
     width: 300px;

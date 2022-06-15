@@ -266,7 +266,7 @@ export default function BasicGrid() {
                             {(randomBook !== {} && randomBook !== null && randomBook !== false) ? randomBook.map((res, index) => <div  key={index}>
                                 <img src={res.image}  alt='image3' />
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <h3  className='titleh3'>{res.title}</h3>
+                                    <h3  className='titleh3'>{res.title.substr(0, 12)}  {res.title? res.title.length >= 13 ? '...' : '' : 'تستی'}</h3>
                                     {token.token ?
                                         <Tooltip title="خواندن کتاب" placement="bottom">
                                             <Link style={{ textDecoration: 'none', color: colorText }} to={`/ditails/${res.id}`}>
