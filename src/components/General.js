@@ -51,27 +51,18 @@ export default function BasicGrid() {
         infinite: true,
         speed: 800,
         slidesToShow: 2,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         autoplay: true,
         autoplaySpeed: 1500,
         arrows: false,
         rtl: true,
         responsive: [
             {
-                breakpoint: 1000,
+                breakpoint: 0,
                 settings: {
                     arrows: false,
                     centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 1
-                }
-            },
-            {
-                breakpoint: 500,
-                settings: {
-                    arrows: false,
-                    centerMode: true,
-                    centerPadding: '40px',
+                    centerPadding: '10px',
                     slidesToShow: 1
                 }
             }
@@ -271,9 +262,9 @@ export default function BasicGrid() {
                     {/* slider 2 */}
                     <h2 className='titleh2' style={{ textAlign: 'center', marginTop: '80px' }}> کتاب های پیشنهادی</h2>
                     <Box sx={{ my: 10, p: 0, width: '100%' }}>
-                        <Slider className='Slider' style={{ width: '70%', margin: 'auto', padding: 0 }} {...settings}>
-                            {(randomBook !== {} && randomBook !== null && randomBook !== false) ? randomBook.map((res, index) => <div key={index}>
-                                <img src={res.image} alt='image3' />
+                        <Slider className='Slider' style={{ width: 'calc(100% - 100px)', margin: 'auto', padding: 0 }} {...settings}>
+                            {(randomBook !== {} && randomBook !== null && randomBook !== false) ? randomBook.map((res, index) => <div  key={index}>
+                                <img src={res.image}  alt='image3' />
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <h3  className='titleh3'>{res.title}</h3>
                                     {token.token ?

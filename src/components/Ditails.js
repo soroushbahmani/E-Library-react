@@ -76,6 +76,7 @@ export default function Ditails() {
   }, [])
 
 
+  var height = Math.max(window.innerHeight);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -125,18 +126,18 @@ export default function Ditails() {
   }
 
   return (
-    <div className='general'>
+    <div className='general' style={{height:height}}>
       {
         loading ? <Loading /> :
           token.token ?
             <>
               <MenuTop />
-              <Grid sx={{ pt: 3, pb: 3, mx: 2, direction: 'rtl' }}>
-                <Card sx={{ width: '50%', mx: 'auto', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
+              <Grid sx={{ pt: 3, pb: 3, mx: 2,mt:4, direction: 'rtl' }}>
+                <Card sx={{ width: 'calc(100% - 100px)', mx: 'auto', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                   <CardActionArea sx={{ textAlign: 'right' }}>
                     <CardMedia
 
-                      sx={{ p: 4, height: "50vh", objectFit: 'contain' }}
+                      sx={{ p: 1, height: "188px"}}
                       component="img"
                       image={data.data.image}
                       alt={'img ' + data.data.title + 'book'}
@@ -163,8 +164,7 @@ export default function Ditails() {
                       </Typography>
                     </CardContent>
                   </CardActionArea>
-                  <CardActions sx={{ justifyContent: 'right' }}>
-
+                  <CardActions sx={{ display:'flex' , justifyContent:'space-around'}}>
 
                     <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                       <Tooltip title="اضافه به کتابخانه" placement="right">
