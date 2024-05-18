@@ -20,7 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditAboutUS from './components/EditAboutUs';
 import EditContactUs from './components/EditContactUs';
 
-axios.defaults.baseURL = 'http://library.erimo.ir';
+axios.defaults.baseURL = 'http://library.erimo.ir/';
 function App() {
 
   return (
